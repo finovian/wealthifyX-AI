@@ -5,8 +5,49 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { calculateStockReturn } from "@/lib/calculators/stock-return";
+import {
+  generateBreadcrumbSchema,
+  generateFaqSchema,
+  generateFinancialProductSchema,
+} from "@/lib/schema";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
+
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Tools", url: "/tools" },
+  { name: "Stock Return Calculator", url: "/tools/stock-return" },
+];
+
+const faqs = [
+  {
+    question: "What is CAGR?",
+    answer:
+      "CAGR stands for Compound Annual Growth Rate. It is the measure of an investment's annual growth rate over a specified period of time. CAGR is one of the most accurate ways to calculate and determine an investor's return.",
+  },
+  {
+    question: "How to calculate stock returns?",
+    answer:
+      "To calculate stock returns, you need the initial investment value, the final investment value, and the investment duration. Our stock return calculator uses these inputs to compute the CAGR and the absolute and total returns on your investment.",
+  },
+  {
+    question: "Is CAGR the same as annual return?",
+    answer:
+      "No, CAGR is not the same as a simple annual return. Annual return can fluctuate year by year, while CAGR provides a smoothed-out average annual return over a given period. It provides a more accurate picture of an investment's performance.",
+  },
+  {
+    question: "Why is CAGR important for investors?",
+    answer:
+      "CAGR is important because it allows investors to compare the performance of different investments over the same time horizon. It provides a single, easy-to-understand figure that represents the annual growth of an investment.",
+  },
+];
+
+const financialProduct = {
+  name: "Stock Return / CAGR Calculator",
+  description:
+    "A free online tool to calculate the Compound Annual Growth Rate (CAGR) and total returns of your stock investments. Evaluate your portfolio's performance with ease.",
+  url: "/tools/stock-return",
+};
 
 export default function StockReturnCalculatorPage() {
   const [initialInvestment, setInitialInvestment] = useState("10000");
@@ -30,13 +71,33 @@ export default function StockReturnCalculatorPage() {
 
   return (
     <section className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateFaqSchema(faqs)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateFinancialProductSchema(financialProduct)
+          ),
+        }}
+      />
       {/* Header */}
       <header className="mb-10">
         <h1 className="text-3xl font-semibold tracking-tight">
-          Stock Return / CAGR Calculator
+          Stock Return & CAGR Calculator
         </h1>
         <p className="mt-2 text-gray-600">
-          Calculate the CAGR and total returns on your investments.
+          Calculate the Compound Annual Growth Rate (CAGR) and total returns on your stock investments.
         </p>
       </header>
 
@@ -97,49 +158,35 @@ export default function StockReturnCalculatorPage() {
 
       {/* Explanation (SEO GOLD) */}
       <article className="prose prose-gray mt-16 max-w-none">
-        <h2>How CAGR is calculated</h2>
+        <h2>How to Calculate Stock Returns and CAGR</h2>
         <p>
-          The Compound Annual Growth Rate (CAGR) is the rate of return that would be required for an investment to grow from its beginning balance to its ending balance, assuming the profits were reinvested at the end of each year of the investment’s lifespan.
+          This calculator helps you determine the profitability of your stock investments by calculating the Compound Annual Growth Rate (CAGR), total return, and absolute profit. To get started, you need to provide:
+        </p>
+        <ul>
+            <li><strong>Initial Investment:</strong> The total amount you invested at the beginning.</li>
+            <li><strong>Final Value:</strong> The current market value of your investment.</li>
+            <li><strong>Investment Duration (Years):</strong> The number of years you held the investment.</li>
+        </ul>
+        <p>These inputs will allow the calculator to provide a clear picture of your investment's performance over time.</p>
+
+        <h2>Understanding CAGR and Total Return</h2>
+        <p>
+          <strong>CAGR (Compound Annual Growth Rate)</strong> is a key metric used to evaluate the performance of an investment. It provides a smoothed-out annual rate of return, making it easy to compare different investments. It is a much more accurate measure than simple annual return because it accounts for compounding.
         </p>
         <p>
-            This calculator uses the standard formula to compute CAGR. The results are for educational purposes only and do not constitute investment advice.
+          <strong>Total Return</strong> represents the full return of an investment, including capital gains and dividends. It is expressed as a percentage of the initial investment. While useful, it doesn't account for the time value of money, which is where CAGR excels.
         </p>
+
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div key={index}>
+              <h3 className="font-semibold">{faq.question}</h3>
+              <p className="text-gray-600">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
       </article>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "What is CAGR?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "CAGR stands for Compound Annual Growth Rate. It's the annualized rate of return of an investment over a specific period, assuming profits are reinvested.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "How is CAGR different from total return?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Total return shows the overall percentage gain or loss on an investment. CAGR, on the other hand, provides a smoothed-out annual growth rate, making it easier to compare different investments over time.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "Is a higher CAGR always better?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "A higher CAGR generally indicates better performance, but it doesn't account for volatility or risk. It's a historical measure and does not guarantee future results.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
     </section>
   );
 }

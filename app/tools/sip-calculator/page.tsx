@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import SipCalculatorPage from "@/screens/SipCalculatorPage";
 
 export const metadata: Metadata = {
-  title: "SIP Calculator – Calculate Monthly Investment Returns | Wealthifyx",
+  title: "SIP Calculator for Mutual Funds - India | Wealthifyx",
   description:
-    "Use Wealthifyx SIP Calculator to estimate the future value of your monthly investments. Calculate total invested amount, estimated returns, and maturity value easily.",
+    "Estimate your SIP returns and the future value of your mutual fund investments in India. Our easy-to-use SIP calculator helps you plan your investment goals.",
   alternates: {
     canonical: "https://wealthifyx.com/tools/sip-calculator",
   },

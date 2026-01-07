@@ -1,4 +1,17 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Tools", url: "/tools" },
+];
+
+export const metadata: Metadata = {
+  title: "Financial Calculators and Tools | Wealthifyx",
+  description:
+    "A collection of free and easy-to-use financial calculators for investment planning, including SIP and stock return calculators.",
+};
 
 const tools = [
   {
@@ -16,6 +29,12 @@ const tools = [
 export default function ToolsPage() {
   return (
     <section className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
       <header className="mb-10">
         <h1 className="text-3xl font-semibold tracking-tight">
           Finance Tools

@@ -1,13 +1,25 @@
 import type { Metadata } from "next";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Terms of Service", url: "/terms" },
+];
 
 export const metadata: Metadata = {
   title: "Terms of Service | Wealthifyx",
-  description: "Read the Wealthifyx terms of service.",
+  description: "Read the terms of service for using Wealthifyx. By using our financial calculators and content, you agree to these terms.",
 };
 
 export default function TermsPage() {
   return (
     <main className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
       <header className="mb-10">
         <h1 className="text-3xl font-semibold tracking-tight">
           Terms of Service

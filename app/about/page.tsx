@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "About", url: "/about" },
+];
 
 export const metadata: Metadata = {
   title: "About Wealthifyx",
@@ -9,6 +15,12 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
       <header className="mb-10">
         <h1 className="text-3xl font-semibold tracking-tight">
           About Wealthifyx

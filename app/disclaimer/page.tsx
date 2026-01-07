@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Disclaimer", url: "/disclaimer" },
+];
 
 export const metadata: Metadata = {
   title: "Disclaimer | Wealthifyx",
@@ -9,6 +15,12 @@ export const metadata: Metadata = {
 export default function DisclaimerPage() {
   return (
     <main className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
       <header className="mb-10">
         <h1 className="text-3xl font-semibold tracking-tight">
           Disclaimer

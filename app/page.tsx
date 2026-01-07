@@ -1,13 +1,23 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { generateBreadcrumbSchema } from "@/lib/schema";
+
+const breadcrumbs = [{ name: "Home", url: "/" }];
 
 export default function Home() {
   return (
     <div className="py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
       <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
         Simple finance tools for better money decisions
       </h1>
+
 
       <p className="mt-4 text-lg text-gray-600">
         Clean, fast, and free calculators for investors worldwide.

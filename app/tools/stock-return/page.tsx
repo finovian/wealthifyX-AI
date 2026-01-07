@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import StockReturnCalculatorPage from "@/screens/StockReturnCalculatorPage";
 
 export const metadata: Metadata = {
-  title: "Stock Return / CAGR Calculator | Wealthifyx",
+  title: "CAGR Calculator for Stocks & Mutual Funds | Wealthifyx",
   description:
-    "Calculate the CAGR and total return of your stock investments. See your portfolio's annualized growth rate and absolute profit with our simple tool.",
+    "Calculate the annualized return (CAGR) of your stock market and mutual fund investments. Evaluate your portfolio's performance with our free CAGR calculator.",
   alternates: {
     canonical: "https://wealthifyx.com/tools/stock-return",
   },
