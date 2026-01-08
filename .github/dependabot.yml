@@ -1,15 +1,11 @@
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    target-branch: "dev"
+  - package-ecosystem: npm
+    directory: /
+    target-branch: dev
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 3
-
-    pull-request-branch-name:
-      separator: "-"
+      interval: daily
 
     groups:
       patch-dependencies:
