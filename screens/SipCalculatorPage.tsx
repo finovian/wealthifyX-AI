@@ -4,19 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { calculateSip } from "@/lib/calculators/sip";
-import {
-  generateBreadcrumbSchema,
-  generateFaqSchema,
-  generateFinancialProductSchema,
-} from "@/lib/schema";
-import { useState } from "react";
 import type { ChangeEvent } from "react";
-
-const breadcrumbs = [
-  { name: "Home", url: "/" },
-  { name: "Tools", url: "/tools" },
-  { name: "SIP Calculator", url: "/tools/sip-calculator" },
-];
+import { useState } from "react";
 
 const faqs = [
   {
@@ -46,13 +35,6 @@ const faqs = [
   },
 ];
 
-const financialProduct = {
-  name: "SIP Calculator",
-  description:
-    "A free online tool to calculate the future value of your Systematic Investment Plan (SIP) investments. Estimate your returns based on your monthly investment, expected return rate, and investment tenure.",
-  url: "/tools/sip-calculator",
-};
-
 export default function SipCalculatorPage() {
   const [monthlyInvestment, setMonthlyInvestment] = useState("5000");
   const [annualReturnRate, setAnnualReturnRate] = useState("12");
@@ -79,26 +61,6 @@ export default function SipCalculatorPage() {
 
   return (
     <section className="py-16 sm:py-24">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateFaqSchema(faqs)),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            generateFinancialProductSchema(financialProduct)
-          ),
-        }}
-      />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-12 text-center">
@@ -182,8 +144,8 @@ export default function SipCalculatorPage() {
             </li>
             <li>
               <strong>Expected Annual Return (%):</strong> The annual rate of
-              return you expect from your investment. This is an estimate and can
-              vary based on the type of fund and market conditions.
+              return you expect from your investment. This is an estimate and
+              can vary based on the type of fund and market conditions.
             </li>
             <li>
               <strong>Investment Duration (Years):</strong> The number of years
@@ -212,9 +174,8 @@ export default function SipCalculatorPage() {
           <p>
             <strong>Rupee Cost Averaging:</strong> Since you invest a fixed
             amount every month, you buy more units when the market is low and
-            fewer units when the market is high. This averages out your
-
-            purchase cost over time and protects you from market volatility.
+            fewer units when the market is high. This averages out your purchase
+            cost over time and protects you from market volatility.
           </p>
           <h2>Frequently Asked Questions (FAQ)</h2>
           <div className="space-y-6">

@@ -1,22 +1,11 @@
-'use client'
+"use client";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { calculateStockReturn } from "@/lib/calculators/stock-return";
-import {
-  generateBreadcrumbSchema,
-  generateFaqSchema,
-  generateFinancialProductSchema,
-} from "@/lib/schema";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-
-const breadcrumbs = [
-  { name: "Home", url: "/" },
-  { name: "Tools", url: "/tools" },
-  { name: "Stock Return Calculator", url: "/tools/stock-return" },
-];
 
 const faqs = [
   {
@@ -41,13 +30,6 @@ const faqs = [
   },
 ];
 
-const financialProduct = {
-  name: "Stock Return / CAGR Calculator",
-  description:
-    "A free online tool to calculate the Compound Annual Growth Rate (CAGR) and total returns of your stock investments. Evaluate your portfolio's performance with ease.",
-  url: "/tools/stock-return",
-};
-
 export default function StockReturnCalculatorPage() {
   const [initialInvestment, setInitialInvestment] = useState("10000");
   const [finalValue, setFinalValue] = useState("25000");
@@ -62,7 +44,11 @@ export default function StockReturnCalculatorPage() {
   const handleNumericChange =
     (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {
       let value = e.target.value;
-      if (value.length > 1 && value.startsWith("0") && !value.startsWith("0.")) {
+      if (
+        value.length > 1 &&
+        value.startsWith("0") &&
+        !value.startsWith("0.")
+      ) {
         value = value.substring(1);
       }
       setter(value);
@@ -70,26 +56,6 @@ export default function StockReturnCalculatorPage() {
 
   return (
     <section className="py-16 sm:py-24">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateFaqSchema(faqs)),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            generateFinancialProductSchema(financialProduct)
-          ),
-        }}
-      />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-12 text-center">
@@ -106,7 +72,7 @@ export default function StockReturnCalculatorPage() {
         <div className="space-y-6">
           <div>
             <Label className="text-sm text-gray-600">
-              Initial Investment (₹)
+              Initial Investment ($)
             </Label>
             <Input
               type="number"
@@ -116,7 +82,7 @@ export default function StockReturnCalculatorPage() {
             />
           </div>
           <div>
-            <Label className="text-sm text-gray-600">Final Value (₹)</Label>
+            <Label className="text-sm text-gray-600">Final Value ($)</Label>
             <Input
               type="number"
               value={finalValue}
@@ -141,17 +107,14 @@ export default function StockReturnCalculatorPage() {
 
         {/* Results */}
         <div>
-          <ResultRow
-            label="CAGR"
-            value={`${result.cagr.toLocaleString()} %`}
-          />
+          <ResultRow label="CAGR" value={`${result.cagr.toLocaleString()} %`} />
           <ResultRow
             label="Total Return"
             value={`${result.totalReturn.toLocaleString()} %`}
           />
           <ResultRow
             label="Absolute Profit"
-            value={`₹ ${result.absoluteProfit.toLocaleString()}`}
+            value={`$ ${result.absoluteProfit.toLocaleString()}`}
             highlight
           />
         </div>
@@ -167,8 +130,8 @@ export default function StockReturnCalculatorPage() {
           </p>
           <ul>
             <li>
-              <strong>Initial Investment:</strong> The total amount you
-              invested at the beginning.
+              <strong>Initial Investment:</strong> The total amount you invested
+              at the beginning.
             </li>
             <li>
               <strong>Final Value:</strong> The current market value of your
