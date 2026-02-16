@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   title: "Wealthifyx – Simple Finance Tools",
   description:
     "Clean, fast, and free finance calculators to help you make better investment decisions.",
+
+  verification: {
+    other: {
+      "msvalidate.01": "68CC82887CF381F8D89FD1BFDFA8709A",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -22,6 +28,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
+        
         <link rel="icon" href="/favicon.svg" />
 
         {/* GA4 base script */}
