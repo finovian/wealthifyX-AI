@@ -1,0 +1,629 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Ubuntu:wght@300;400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   TAILWIND v4 THEME TOKENS
+   ======================================== */
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
+
+  --font-serif: "Ubuntu", serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "Ubuntu", sans-serif;
+  --font-ubuntu: "Ubuntu", sans-serif;
+
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-border: var(--accent-border);
+  --color-accent-hover: var(--accent-hover);
+
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+
+  --color-bg-base: var(--bg-base);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-muted: var(--bg-muted);
+  --color-bg-card: var(--bg-card);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+}
+
+/* ========================================
+   CSS VARIABLES — LIGHT MODE (DEFAULT)
+   ======================================== */
+:root {
+  --bg-base: #ffffff;
+  --bg-subtle: #f9fafb;
+  --bg-muted: #f3f4f6;
+  --bg-card: #ffffff;
+
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --text-faint: #9ca3af;
+
+  --accent: #16a34a;
+  --accent-light: #22c55e;
+  --accent-bg: #f0fdf4;
+  --accent-border: #bbf7d0;
+  --accent-hover: #15803d;
+
+  --positive: #16a34a;
+  --negative: #dc2626;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-hover:
+    0 16px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  color-scheme: light;
+}
+
+/* ========================================
+   CSS VARIABLES — DARK MODE
+   ======================================== */
+[data-theme="dark"] {
+  --bg-base: #0a0a0a;
+  --bg-subtle: #111111;
+  --bg-muted: #1a1a1a;
+  --bg-card: #141414;
+
+  --border: #262626;
+  --border-strong: #404040;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-faint: #6b7280;
+
+  --accent: #22c55e;
+  --accent-light: #4ade80;
+  --accent-bg: rgba(34, 197, 94, 0.06);
+  --accent-border: rgba(34, 197, 94, 0.2);
+  --accent-hover: #16a34a;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+/* System preference fallback */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-base: #0a0a0a;
+    --bg-subtle: #111111;
+    --bg-muted: #1a1a1a;
+    --bg-card: #141414;
+
+    --border: #262626;
+    --border-strong: #404040;
+
+    --text-primary: #f9fafb;
+    --text-secondary: #e5e7eb;
+    --text-muted: #9ca3af;
+    --text-faint: #6b7280;
+
+    --accent: #22c55e;
+    --accent-light: #4ade80;
+    --accent-bg: rgba(34, 197, 94, 0.06);
+    --accent-border: rgba(34, 197, 94, 0.2);
+    --accent-hover: #16a34a;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.6);
+
+    color-scheme: dark;
+  }
+}
+
+/* ========================================
+   BASE RESET
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+h1,
+h2,
+h3 {
+  font-family: "DM Sans", sans-serif;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+h1 {
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+}
+
+h2 {
+  font-weight: 400;
+  letter-spacing: -1px;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+/* ========================================
+   FORM ELEMENTS — UBUNTU FONT
+   ======================================== */
+input,
+textarea,
+select,
+.form-label,
+.input-prefix,
+.input-suffix,
+.calc-button,
+.result-label,
+button {
+  font-family: "Ubuntu", sans-serif;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: "Ubuntu", sans-serif;
+  color: var(--text-faint);
+}
+
+/* ========================================
+   SECTION STRUCTURE
+   ======================================== */
+.section-wrapper {
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.hero-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 96px;
+  padding-bottom: 48px;
+}
+
+.social-proof-bar {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* ========================================
+   SECTION TYPOGRAPHY
+   ======================================== */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+}
+
+.section-heading {
+  font-size: clamp(28px, 4vw, 44px);
+  margin-top: 8px;
+}
+
+.section-subtext {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  line-height: 1.65;
+}
+
+/* ========================================
+   CARD STYLES
+   ======================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-hoverable:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-border);
+  transform: translateY(-2px);
+}
+
+@media (hover: none) {
+  .card-hoverable:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-md);
+  }
+  .card-hoverable:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* ========================================
+   BUTTON STYLES
+   ======================================== */
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.btn-ghost:active {
+  transform: scale(0.97);
+}
+
+/* ========================================
+   INPUT STYLES
+   ======================================== */
+.input-field {
+  width: 100%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 16px; /* 16px base — prevents iOS zoom */
+  color: var(--text-primary);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  outline: none;
+  min-height: 48px;
+}
+
+.input-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+/* Restore smaller size on desktop */
+@media (min-width: 768px) {
+  .input-field {
+    font-size: 15px;
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   NUMBER INPUT — REMOVE SPINNERS
+   ======================================== */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ========================================
+   iOS ZOOM PREVENTION — CRITICAL
+   ======================================== */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.45s ease-out forwards;
+  opacity: 0;
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.delay-0 {
+  animation-delay: 0s;
+}
+.delay-1 {
+  animation-delay: 0.05s;
+}
+.delay-2 {
+  animation-delay: 0.1s;
+}
+.delay-3 {
+  animation-delay: 0.18s;
+}
+.delay-4 {
+  animation-delay: 0.25s;
+}
+.delay-5 {
+  animation-delay: 0.32s;
+}
+.delay-6 {
+  animation-delay: 0.4s;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}
+
+/* ========================================
+   SELECTION
+   ======================================== */
+::selection {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* ========================================
+   RECHARTS OVERRIDES
+   ======================================== */
+.recharts-cartesian-axis-tick-value {
+  font-family: "DM Mono", monospace !important;
+  font-size: 11px !important;
+  fill: var(--text-faint) !important;
+}
+
+.recharts-tooltip-wrapper {
+  font-family: "DM Sans", sans-serif !important;
+}
+
+/* ========================================
+   RESPONSIVE — SECTION PADDING
+   ======================================== */
+@media (max-width: 767px) {
+  section,
+  .section-wrapper {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .hero-section {
+    padding-top: 72px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .email-section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .social-proof-bar {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 6px !important;
+  }
+
+  .footer {
+    padding-top: 36px !important;
+    padding-bottom: 24px !important;
+  }
+
+  /* Section titles LEFT aligned on mobile */
+  .section-eyebrow,
+  .section-heading,
+  .section-subtext {
+    text-align: left !important;
+  }
+
+  .section-heading {
+    font-size: clamp(28px, 7vw, 36px) !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.1 !important;
+  }
+
+  .section-eyebrow {
+    font-size: 10px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .section-subtext {
+    font-size: 14px !important;
+  }
+
+  /* section margins */
+  section + section {
+    margin-top: 0;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — NAV
+   ======================================== */
+@media (max-width: 1023px) {
+  nav {
+    padding: 0 20px !important;
+    height: 56px !important;
+  }
+
+  .nav-logo-text {
+    font-size: 18px !important;
+  }
+}
+
+/* ========================================
+   RESPONSIVE — FOOTER
+   ======================================== */
+@media (max-width: 767px) {
+  footer {
+    padding: 36px 20px 24px !important;
+  }
+}
+
+/* ========================================
+   TOUCH INTERACTIONS
+   ======================================== */
+@media (hover: none) {
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+  .btn-ghost:active {
+    transform: scale(0.97);
+  }
+}
+
+.calc-chart svg,
+.calc-chart .recharts-wrapper,
+.calc-chart .recharts-surface {
+  outline: none !important;
+}
+
+.recharts-zIndex-layer_100,
+.recharts-layer,
+.recharts-curve,
+.recharts-area-area {
+  outline: none !important;
+}
