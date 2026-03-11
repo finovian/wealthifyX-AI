@@ -36,7 +36,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`animate-fade-up delay-0 fixed top-[0] left-[0] right-[0] z-[100] flex items-center justify-between transition-[background,border-color] duration-[0.25s] ease-[ease] h-[56px] px-[48px] lg:h-[60px] lg:px-[48px] ${
+        className={`animate-fade-up delay-0 fixed top-[0] left-[0] right-[0] z-[100] flex items-center justify-between transition-[background,border-color] duration-[0.25s] ease-[ease] h-[56px] px-[20px] lg:h-[60px] lg:px-[48px] ${
           scrolled
             ? "bg-[color-mix(in_srgb,var(--bg-base)_92%,transparent)] border-b-[1px] border-b-[var(--border)] backdrop-blur-[12px]"
             : "bg-[var(--bg-base)] border-b-[1px] border-b-transparent"
@@ -48,7 +48,7 @@ export default function Navbar() {
           className="flex items-center no-underline shrink-0"
         >
           <span
-            className="font-sans font-[400] text-[var(--text-primary)] tracking-[-0.5px] text-[20px] lg:text-[20px]"
+            className="font-sans font-[400] text-[var(--text-primary)] tracking-[-0.5px] text-[18px] lg:text-[20px]"
           >
             WealthifyX
           </span>
@@ -76,29 +76,32 @@ export default function Navbar() {
             aria-label="Toggle theme"
             className="bg-transparent border-none cursor-pointer text-[var(--text-muted)] flex items-center justify-center transition-colors duration-[0.15s] ease-[ease] rounded-[8px] min-w-[44px] min-h-[44px] hover:text-[var(--text-primary)]"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {theme === "light" ? (
-                <motion.div
-                  key="sun"
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Sun size={18} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="moon"
-                  initial={{ opacity: 0, rotate: 90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: -90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Moon size={18} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="relative w-[18px] h-[18px] flex items-center justify-center">
+              <AnimatePresence mode="wait" initial={false}>
+                {theme === "light" && (
+                  <motion.div
+                    key="sun"
+                    initial={{ opacity: 0, rotate: -90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Sun size={18} />
+                  </motion.div>
+                )}
+                {theme === "dark" && (
+                  <motion.div
+                    key="moon"
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Moon size={18} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </button>
 
           {/* Separator — desktop only */}
@@ -205,10 +208,12 @@ export default function Navbar() {
                   onClick={toggleTheme}
                   className="bg-[var(--bg-subtle)] border-[1px] border-[var(--border)] rounded-[8px] py-[10px] px-[16px] text-[var(--text-primary)] font-ubuntu text-[14px] font-[400] cursor-pointer flex items-center justify-center gap-[8px] min-h-[44px] w-full transition-colors duration-[0.15s] ease-[ease]"
                 >
-                  {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+                  {theme === "light" ? <Moon size={16} /> : theme === "dark" ? <Sun size={16} /> : <div className="w-4 h-4" />}
                   {theme === "light"
                     ? "Switch to Dark Mode"
-                    : "Switch to Light Mode"}
+                    : theme === "dark" 
+                    ? "Switch to Light Mode"
+                    : "Toggle Theme"}
                 </button>
 
                 {/* Free. Always. */}

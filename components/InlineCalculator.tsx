@@ -133,7 +133,7 @@ export default function InlineCalculator() {
                       placeholder="10,000"
                       value={initial}
                       onChange={(e) => setInitial(e.target.value)}
-                      style={{ paddingLeft: 28 }}
+                      style={{ paddingLeft: 40 }}
                     />
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function InlineCalculator() {
                       placeholder="25,000"
                       value={final}
                       onChange={(e) => setFinal(e.target.value)}
-                      style={{ paddingLeft: 28 }}
+                      style={{ paddingLeft: 40 }}
                     />
                   </div>
                 </div>

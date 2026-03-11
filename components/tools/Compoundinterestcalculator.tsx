@@ -11,8 +11,9 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { TrendingUp, ChevronDown, ArrowRight } from "lucide-react";
+import { TrendingUp, ArrowRight } from "lucide-react";
 import { faqs, relatedTools } from "@/constants/compound-interest";
+import FAQSection from "../FAQSection";
 
 /* ─── Types ─────────────────────────────────────────── */
 interface CalcResult {
@@ -146,7 +147,6 @@ export default function CompoundInterestCalculator() {
   const [years, setYears] = useState("10");
   const [frequency, setFrequency] = useState(12);
   const [contribution, setContribution] = useState("");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const result = useMemo<CalcResult | null>(() => {
     const p = parseFloat(principal);
@@ -196,13 +196,13 @@ export default function CompoundInterestCalculator() {
 
                 {/* Principal */}
                 <div className="flex flex-col gap-[6px]">
-                  <label className="font-ubuntu text-[13px] font-[500] text-[var(--text-muted)] flex items-center gap-[8px]">Initial Investment</label>
+                  <label className="font-ubuntu text-[13px] font-[500] text-[var(--text-secondary)] flex items-center gap-[8px]">Initial Investment</label>
                   <div className="relative">
                     <span className="absolute left-[14px] top-[50%] -translate-y-[50%] font-ubuntu text-[14px] text-[var(--text-faint)] pointer-events-none">$</span>
                     <input
                       type="number"
                       inputMode="decimal"
-                      className="input-field min-h-[46px] !pl-6"
+                      className="input-field min-h-[46px] pl-[40px]"
                       placeholder="10,000"
                       value={principal}
                       onChange={(e) => setPrincipal(e.target.value)}
@@ -264,7 +264,7 @@ export default function CompoundInterestCalculator() {
 
                 {/* Monthly contribution */}
                 <div className="flex flex-col gap-[6px]">
-                  <label className="font-ubuntu text-[13px] font-[500] text-[var(--text-muted)] flex items-center gap-[8px]">
+                  <label className="font-ubuntu text-[13px] font-[500] text-[var(--text-secondary)] flex items-center gap-[8px]">
                     Monthly Contribution
                     <span className="text-[10px] font-[400] text-[var(--text-faint)] bg-[var(--bg-muted)] rounded-[4px] p-[1px_6px]">optional</span>
                   </label>
@@ -273,7 +273,7 @@ export default function CompoundInterestCalculator() {
                     <input
                       type="number"
                       inputMode="decimal"
-                      className="input-field min-h-[46px] pl-[28px]"
+                      className="input-field min-h-[46px] pl-[40px]"
                       placeholder="0"
                       value={contribution}
                       onChange={(e) => setContribution(e.target.value)}
@@ -494,55 +494,7 @@ export default function CompoundInterestCalculator() {
       </div>
 
       {/* ── FAQ ── */}
-      <div className="section-wrapper bg-[var(--bg-base)]">
-        <div className="max-w-[1100px] m-[0_auto]">
-          <div className="section-header">
-            <span className="section-eyebrow">{"// FAQ"}</span>
-            <h2 className="section-heading">Common questions.</h2>
-          </div>
-          <div className="border-t-[1px] border-t-[var(--border)] max-w-[100%]">
-            {faqs.map((faq, i) => {
-              const isOpen = openFaq === i;
-              return (
-                <div
-                  key={i}
-                  className="border-b-[1px] border-b-[var(--border)]"
-                >
-                  <button
-                    className="w-[100%] flex justify-between items-center gap-[16px] p-[18px_0] bg-transparent border-none cursor-pointer text-left min-h-[56px] group"
-                    onClick={() => setOpenFaq(isOpen ? null : i)}
-                    aria-expanded={isOpen}
-                  >
-                    <span className="font-sans text-[15px] font-[500] text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-[0.15s] line-height-[1.4] flex-[1]">{faq.q}</span>
-                    <span
-                      className={`text-[var(--text-muted)] transition-all duration-[0.2s] ease-[ease] shrink-0 flex items-center justify-center w-[28px] h-[28px] rounded-[6px] border-[1px] ${
-                        isOpen 
-                          ? "text-[var(--accent)] bg-[var(--accent-bg)] border-[var(--accent-border)] rotate-[180deg]" 
-                          : "bg-[var(--bg-subtle)] border-[var(--border)]"
-                      }`}
-                    >
-                      <ChevronDown size={16} />
-                    </span>
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22, ease: "easeOut" }}
-                        style={{ overflow: "hidden" }}
-                      >
-                        <p className="font-sans text-[14px] text-[var(--text-muted)] leading-[1.7] p-[0_40px_16px_0] max-[767px]:pr-[0] m-[0]">{faq.a}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      <FAQSection faqs={faqs} id="faq" />
 
       {/* ── Related tools ── */}
       <div className="section-wrapper bg-[var(--bg-subtle)]">

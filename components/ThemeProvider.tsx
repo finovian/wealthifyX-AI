@@ -5,12 +5,12 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 type Theme = 'light' | 'dark';
 
 interface ThemeContextType {
-  theme: Theme;
+  theme: Theme | undefined;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: undefined,
   toggleTheme: () => {},
 });
 
@@ -19,21 +19,28 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
+  // Initialize from the attribute set by the blocking script in layout.tsx
+  // This helps avoid hydration mismatch flicker
+  const [theme, setTheme] = useState<Theme | undefined>(undefined);
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem('wealthifyx-theme') as Theme | null;
-    if (stored) {
-      setTheme(stored);
-      document.documentElement.setAttribute('data-theme', stored);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const systemTheme = prefersDark ? 'dark' : 'light';
-      setTheme(systemTheme);
-      document.documentElement.setAttribute('data-theme', systemTheme);
-    }
+    const root = document.documentElement;
+    const initialTheme = root.getAttribute('data-theme') as Theme || 'light';
+    setTheme(initialTheme);
+
+    // Watch for system theme changes if no preference is stored
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      const stored = localStorage.getItem('wealthifyx-theme');
+      if (!stored) {
+        const next = mediaQuery.matches ? 'dark' : 'light';
+        setTheme(next);
+        root.setAttribute('data-theme', next);
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -42,11 +49,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('wealthifyx-theme', next);
   }, [theme]);
-
-  // Prevent flash by not rendering until mounted
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
