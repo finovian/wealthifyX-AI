@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "./components/ThemeProvider";
+import { ThemeProvider } from "../components/ThemeProvider";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Free Finance Calculators for Investors | WealthifyX",
+  metadataBase: new URL("https://wealthifyx.com"),
+  title: {
+    default: "WealthifyX — Free Finance Calculators",
+    template: "%s | WealthifyX",
+  },
   description:
-    "Free, precise finance calculators for investors. CAGR, SIP, Portfolio returns, Inflation-adjusted calculations and more. No accounts. No data stored. Always free.",
+    "Free, precise finance calculators for investors. CAGR, compound interest, retirement planning, and more. No accounts. No data stored. Always free.",
   openGraph: {
-    title: "WealthifyX — Free Finance Calculators",
-    description:
-      "Free, precise finance calculators for investors. CAGR, SIP, Portfolio returns, Inflation-adjusted calculations and more. No accounts. No data stored. Always free.",
-    url: "https://wealthifyx.com/",
     siteName: "WealthifyX",
     type: "website",
   },
-  alternates: {
-    canonical: "https://wealthifyx.com/",
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
@@ -33,6 +35,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* ── Site-level schemas — injected once globally ── */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -49,9 +52,26 @@ export default function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "WealthifyX",
+              url: "https://wealthifyx.com",
+              description:
+                "Free precision finance calculators built for investors.",
+            }),
+          }}
+        />
       </head>
       <body style={{ fontFamily: "'DM Sans', sans-serif" }}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

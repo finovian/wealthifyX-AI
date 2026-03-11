@@ -76,42 +76,42 @@ export default function InlineCalculator() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      className="section-wrapper calc-section"
+      className="section-wrapper"
     >
-      <div className="calc-inner">
-        <div className="calc-layout">
+      <div className="max-w-[1100px] m-[0_auto]">
+        <div className="grid grid-cols-[45fr_55fr] max-[767px]:flex max-[767px]:flex-col min-[768px]:max-[1023px]:grid-cols-[1fr] gap-[56px] max-[767px]:gap-[24px] min-[768px]:max-[1023px]:gap-[32px] xl:gap-[72px] items-center">
           {/* LEFT — text */}
-          <div className="calc-text">
+          <div className="max-[1023px]:order-2 max-[767px]:w-[100%]">
             <div className="section-header">
               <span className="section-eyebrow">{"// TRY IT NOW"}</span>
-              <h2 className="section-heading">See the difference.</h2>
-              <p className="section-subtext">
+              <h2 className="section-heading m-[8px_0_14px_0] max-[767px]:text-[26px] max-[767px]:tracking-[-0.5px]">See the difference.</h2>
+              <p className="font-sans text-[15px] max-[767px]:text-[14px] text-[var(--text-muted)] leading-[1.7] mb-[20px] max-[767px]:mb-[14px] max-w-[380px] max-[1023px]:max-w-[100%]">
                 Try our CAGR calculator directly. No page load, no redirect.
                 Real-time results.
               </p>
             </div>
 
-            <ul className="calc-bullets">
+            <ul className="list-none p-[0] m-[0_0_22px_0] max-[767px]:m-[0_0_16px_0] flex flex-col gap-[10px] max-[767px]:gap-[8px]">
               {[
                 "Animated growth chart on every result",
                 "Handles edge cases other calculators miss",
                 "Works perfectly on mobile",
               ].map((item) => (
-                <li key={item} className="calc-bullet-item">
-                  <span className="calc-bullet-dot" />
+                <li key={item} className="flex items-center gap-[10px] font-sans text-[14px] max-[767px]:text-[13px] text-[var(--text-muted)] leading-[1.5]">
+                  <span className="w-[6px] h-[6px] rounded-[50%] bg-[var(--accent)] shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
 
-            <a href="/tools/stock-cagr" className="calc-link">
+            <a href="/tools/stock-cagr" className="font-sans text-[14px] font-[500] text-[var(--accent)] no-underline inline-flex items-center gap-[4px] min-h-[44px] max-[767px]:min-h-[40px] transition-opacity duration-[0.15s] ease-[ease] hover:opacity-[0.75]">
               Open full CAGR calculator →
             </a>
           </div>
 
           {/* RIGHT — calculator card */}
-          <div className="calc-card-wrapper w-full!">
-            <div className="card calc-card">
+          <div className="w-[100%] max-[1023px]:order-1">
+            <div className="card p-[28px] max-[767px]:p-[18px_16px] rounded-[16px] max-[767px]:rounded-[14px] shadow-[var(--shadow-md)] min-[768px]:max-[1023px]:max-w-[520px] min-[768px]:max-[1023px]:m-[0_auto] min-[768px]:max-[1023px]:w-[100%] xl:p-[36px]">
               <span
                 className="section-eyebrow"
                 style={{ marginBottom: 20, display: "block" }}
@@ -119,17 +119,17 @@ export default function InlineCalculator() {
                 {"// CALCULATOR"}
               </span>
 
-              <div className="calc-fields">
-                <div className="calc-field">
-                  <label className="form-label calc-label">
+              <div className="flex flex-col gap-[14px]">
+                <div className="flex flex-col">
+                  <label className="font-ubuntu block text-[12px] font-[500] text-[var(--text-muted)] mb-[6px]">
                     Initial Investment
                   </label>
                   <div style={{ position: "relative" }}>
-                    <span className="input-prefix calc-prefix">$</span>
+                    <span className="absolute left-[14px] top-[50%] -translate-y-[50%] text-[14px] text-[var(--text-faint)] pointer-events-none">$</span>
                     <input
                       type="number"
                       inputMode="decimal"
-                      className="input-field calc-input"
+                      className="input-field min-h-[46px]"
                       placeholder="10,000"
                       value={initial}
                       onChange={(e) => setInitial(e.target.value)}
@@ -138,14 +138,14 @@ export default function InlineCalculator() {
                   </div>
                 </div>
 
-                <div className="calc-field">
-                  <label className="form-label calc-label">Final Value</label>
+                <div className="flex flex-col">
+                  <label className="font-ubuntu block text-[12px] font-[500] text-[var(--text-muted)] mb-[6px]">Final Value</label>
                   <div style={{ position: "relative" }}>
-                    <span className="input-prefix calc-prefix">$</span>
+                    <span className="absolute left-[14px] top-[50%] -translate-y-[50%] text-[14px] text-[var(--text-faint)] pointer-events-none">$</span>
                     <input
                       type="number"
                       inputMode="decimal"
-                      className="input-field calc-input"
+                      className="input-field min-h-[46px]"
                       placeholder="25,000"
                       value={final}
                       onChange={(e) => setFinal(e.target.value)}
@@ -154,14 +154,14 @@ export default function InlineCalculator() {
                   </div>
                 </div>
 
-                <div className="calc-field">
-                  <label className="form-label calc-label">
+                <div className="flex flex-col">
+                  <label className="font-ubuntu block text-[12px] font-[500] text-[var(--text-muted)] mb-[6px]">
                     Number of Years
                   </label>
                   <input
                     type="number"
                     inputMode="decimal"
-                    className="input-field calc-input"
+                    className="input-field min-h-[46px]"
                     placeholder="5"
                     value={years}
                     onChange={(e) => setYears(e.target.value)}
@@ -170,7 +170,7 @@ export default function InlineCalculator() {
               </div>
 
               <button
-                className="btn-primary calc-button calc-cta"
+                className="btn-primary w-[100%] justify-center mt-[18px] p-[13px_24px] text-[15px] max-[767px]:text-[16px] min-h-[50px] max-[767px]:min-h-[52px]"
                 onClick={handleCalculate}
               >
                 Calculate CAGR →
@@ -186,19 +186,21 @@ export default function InlineCalculator() {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     style={{ overflow: "hidden" }}
                   >
-                    <div className="calc-result-wrapper">
-                      <div className="calc-result-row">
-                        <span className="result-label calc-result-label">
+                    <div className="mt-[20px] pt-[20px] border-t-[1px] border-t-[var(--border)]">
+                      <div className="flex justify-between items-center mb-[16px] gap-[12px] min-w-[0]">
+                        <span className="font-ubuntu text-[12px] font-[500] text-[var(--text-muted)] tracking-[0.5px] uppercase shrink-0">
                           CAGR
                         </span>
                         {/* Font size adapts to digit count — no overflow */}
                         <span
-                          className="calc-result-value"
+                          className="font-mono font-[500] leading-[1] overflow-hidden text-ellipsis whitespace-nowrap max-w-[100%] text-right flex-[1] min-w-[0]"
                           style={{
                             color: isPositive
                               ? "var(--positive)"
                               : "var(--negative)",
-                            fontSize: resultFontSize,
+                            fontSize: typeof window !== "undefined" && window.innerWidth < 768
+                              ? resultFontSizeMobile
+                              : resultFontSize,
                           }}
                         >
                           {result.toFixed(2)}%
@@ -206,7 +208,7 @@ export default function InlineCalculator() {
                       </div>
 
                       {chartData.length > 0 && (
-                        <div className="calc-chart" style={{ outline: "none" }}>
+                        <div className="w-[100%] h-[140px] max-[767px]:h-[120px]" style={{ outline: "none" }}>
                           <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={chartData}>
                               <defs>
@@ -273,265 +275,6 @@ export default function InlineCalculator() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        .calc-inner {
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .calc-layout {
-          display: grid;
-          grid-template-columns: 45fr 55fr;
-          gap: 56px;
-          align-items: center;
-        }
-
-        .calc-heading {
-          margin-top: 8px !important;
-          margin-bottom: 14px !important;
-        }
-
-        .calc-subtext {
-          font-family: "DM Sans", sans-serif;
-          font-size: 15px;
-          color: var(--text-muted);
-          line-height: 1.7;
-          margin-bottom: 20px;
-          max-width: 380px;
-        }
-
-        .calc-bullets {
-          list-style: none;
-          padding: 0;
-          margin: 0 0 22px 0;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .calc-bullet-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-family: "DM Sans", sans-serif;
-          font-size: 14px;
-          color: var(--text-muted);
-          line-height: 1.5;
-        }
-
-        .calc-bullet-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: var(--accent);
-          flex-shrink: 0;
-        }
-
-        .calc-link {
-          font-family: "DM Sans", sans-serif;
-          font-size: 14px;
-          font-weight: 500;
-          color: var(--accent);
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          min-height: 44px;
-          transition: opacity 0.15s ease;
-        }
-
-        .calc-link:hover {
-          opacity: 0.75;
-        }
-
-        .calc-card {
-          padding: 28px;
-          border-radius: 16px;
-          box-shadow: var(--shadow-md);
-        }
-
-        .calc-fields {
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-        }
-
-        .calc-field {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .calc-label {
-          display: block;
-          font-size: 12px;
-          font-weight: 500;
-          color: var(--text-muted);
-          margin-bottom: 6px;
-        }
-
-        .calc-prefix {
-          position: absolute;
-          left: 14px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 14px;
-          color: var(--text-faint);
-          pointer-events: none;
-        }
-
-        .calc-input {
-          min-height: 46px;
-        }
-
-        .calc-cta {
-          width: 100%;
-          justify-content: center;
-          margin-top: 18px;
-          padding: 13px 24px;
-          font-size: 15px;
-          min-height: 50px;
-        }
-
-        .calc-result-wrapper {
-          margin-top: 20px;
-          padding-top: 20px;
-          border-top: 1px solid var(--border);
-        }
-
-        .calc-result-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 16px;
-          gap: 12px; /* gap prevents overlap at large values */
-          min-width: 0;
-        }
-
-        .calc-result-label {
-          font-size: 12px;
-          font-weight: 500;
-          color: var(--text-muted);
-          letter-spacing: 0.5px;
-          text-transform: uppercase;
-          flex-shrink: 0;
-        }
-
-        .calc-result-value {
-          font-family: "DM Mono", monospace;
-          font-weight: 500;
-          line-height: 1;
-          /* overflow protection */
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          max-width: 100%;
-          text-align: right;
-          flex: 1;
-          min-width: 0;
-        }
-
-        .calc-chart {
-          width: 100%;
-          height: 140px;
-        }
-
-        /* Tablet */
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .calc-layout {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-          .calc-text {
-            order: 2;
-          }
-          .calc-card-wrapper {
-            order: 1;
-          }
-          .calc-subtext {
-            max-width: 100% !important;
-          }
-          .calc-card {
-            max-width: 520px;
-            margin: 0 auto;
-            width: 100%;
-          }
-        }
-
-        /* Mobile */
-        @media (max-width: 767px) {
-          .calc-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 24px !important;
-          }
-
-          /* Calculator first */
-          .calc-card-wrapper {
-            order: 1 !important;
-          }
-          .calc-text {
-            order: 2 !important;
-            width: 100%;
-          }
-
-          .calc-card {
-            padding: 18px 16px !important;
-            border-radius: 14px !important;
-          }
-
-          .calc-heading {
-            font-size: 26px !important;
-            letter-spacing: -0.5px !important;
-          }
-
-          .calc-subtext {
-            font-size: 14px !important;
-            max-width: 100% !important;
-            margin-bottom: 14px !important;
-          }
-
-          .calc-bullets {
-            margin-bottom: 16px !important;
-            gap: 8px !important;
-          }
-
-          .calc-bullet-item {
-            font-size: 13px !important;
-          }
-
-          .calc-cta {
-            font-size: 16px !important;
-            min-height: 52px !important;
-          }
-
-          /* Result value on mobile uses JS-computed size from resultFontSizeMobile */
-          .calc-result-value {
-            font-size: ${result !== null
-              ? resultFontSizeMobile
-              : 28}px !important;
-          }
-
-          .calc-chart {
-            height: 120px !important;
-          }
-
-          /* Tighten text section on mobile — no dead space */
-          .calc-text .calc-link {
-            min-height: 40px !important;
-          }
-        }
-
-        /* Large desktop */
-        @media (min-width: 1280px) {
-          .calc-layout {
-            gap: 72px !important;
-          }
-          .calc-card {
-            padding: 36px !important;
-          }
-        }
-      `}</style>
     </motion.section>
   );
 }
