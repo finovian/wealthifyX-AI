@@ -1,0 +1,30 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 3
+
+    pull-request-branch-name:
+      separator: "-"
+
+    groups:
+      patch-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - patch
+
+      minor-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
