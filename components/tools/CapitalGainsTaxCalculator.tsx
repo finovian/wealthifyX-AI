@@ -612,15 +612,17 @@ export default function CapitalGainsTaxCalculator() {
         <div className="max-w-[1100px] m-[0_auto]">
           <div className="section-header">
             <span className="section-eyebrow">{"// HOW IT WORKS"}</span>
-            <h2 className="section-heading">2024 capital gains tax rates.</h2>
+            <h2 className="section-heading text-[clamp(32px,4vw,48px)]">2024 capital gains tax rates.</h2>
           </div>
 
           {/* LTCG brackets table */}
-          <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[14px] p-[28px_32px] mb-[16px]">
-            <div className="font-sans text-[11px] font-[600] tracking-[1.2px] uppercase text-[var(--accent)] mb-[16px]">
+          <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[14px] p-[28px_32px] max-md:p-[24px_20px] mb-[16px]">
+            <div className="font-sans text-[11px] font-[600] tracking-[1.2px] uppercase text-[var(--accent)] mb-[20px]">
               Long-Term Capital Gains — 2024 Brackets
             </div>
-            <div className="overflow-x-auto">
+            
+            {/* Desktop Table */}
+            <div className="overflow-x-auto hidden md:block">
               <table className="w-[100%] border-collapse font-sans text-[13px]">
                 <thead>
                   <tr className="border-b border-[var(--border)]">
@@ -636,34 +638,82 @@ export default function CapitalGainsTaxCalculator() {
                     { rate: "20%", single: "> $518,900",  mj: "> $583,750",  hoh: "> $551,350" },
                   ].map((row) => (
                     <tr key={row.rate} className="border-b border-[var(--border)] last:border-0">
-                      <td className="py-[10px] pr-[20px] font-sans font-[600] text-[var(--accent)]">{row.rate}</td>
-                      <td className="py-[10px] pr-[20px] text-[var(--text-muted)]">{row.single}</td>
-                      <td className="py-[10px] pr-[20px] text-[var(--text-muted)]">{row.mj}</td>
-                      <td className="py-[10px] text-[var(--text-muted)]">{row.hoh}</td>
+                      <td className="py-[12px] pr-[20px] font-sans font-[600] text-[var(--accent)] text-[15px]">{row.rate}</td>
+                      <td className="py-[12px] pr-[20px] text-[var(--text-muted)]">{row.single}</td>
+                      <td className="py-[12px] pr-[20px] text-[var(--text-muted)]">{row.mj}</td>
+                      <td className="py-[12px] text-[var(--text-muted)]">{row.hoh}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Cards */}
+            <div className="flex flex-col gap-[16px] md:hidden">
+              {[
+                { rate: "0%",  single: "≤ $47,025",   mj: "≤ $94,050",   hoh: "≤ $63,000"  },
+                { rate: "15%", single: "≤ $518,900",  mj: "≤ $583,750",  hoh: "≤ $551,350" },
+                { rate: "20%", single: "> $518,900",  mj: "> $583,750",  hoh: "> $551,350" },
+              ].map((row) => (
+                <div key={row.rate} className="flex flex-col gap-[10px] p-[16px] bg-[var(--bg-subtle)] rounded-[12px] border border-[var(--border)]">
+                  <div className="flex justify-between items-center border-b border-[var(--border)] pb-[8px] mb-[4px]">
+                    <span className="font-sans text-[10px] font-[600] uppercase tracking-[1px] text-[var(--text-faint)]">Tax Rate</span>
+                    <span className="font-sans font-[700] text-[18px] text-[var(--accent)]">{row.rate}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-[12px] gap-y-[8px]">
+                    <div className="flex flex-col">
+                      <span className="font-sans text-[9px] uppercase tracking-[0.5px] text-[var(--text-faint)]">Single</span>
+                      <span className="font-sans text-[13px] text-[var(--text-primary)] font-[500]">{row.single}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-sans text-[9px] uppercase tracking-[0.5px] text-[var(--text-faint)]">Married Joint</span>
+                      <span className="font-sans text-[13px] text-[var(--text-primary)] font-[500]">{row.mj}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-sans text-[9px] uppercase tracking-[0.5px] text-[var(--text-faint)]">Head of Household</span>
+                      <span className="font-sans text-[13px] text-[var(--text-primary)] font-[500]">{row.hoh}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Key rules */}
-          <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[14px] p-[28px_32px] mb-[24px]">
-            <div className="font-sans text-[11px] font-[600] tracking-[1.2px] uppercase text-[var(--accent)] mb-[16px]">
-              Key Rules
+          <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[14px] p-[28px_32px] max-md:p-[24px_20px] mb-[24px]">
+            <div className="font-sans text-[11px] font-[600] tracking-[1.2px] uppercase text-[var(--accent)] mb-[20px]">
+              Tax Filing Rules & Details
             </div>
-            <div className="flex flex-col gap-[12px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px] max-md:gap-[20px]">
               {[
-                { label: "Gains stack on top",       desc: "Your ordinary income fills the brackets first. Capital gains are taxed starting from where your income leaves off — not from $0." },
-                { label: "Short-term = income rate", desc: "Assets held 1 year or less are taxed at your ordinary income rate: 10%–37%. No preferential treatment." },
-                { label: "NIIT: +3.8%",              desc: "Single filers above $200k MAGI and joint filers above $250k owe an additional 3.8% on the lesser of net investment income or excess MAGI." },
-                { label: "State tax is separate",    desc: "Most states tax capital gains as ordinary income. California (13.3%) and New York (10.9%) are highest. Seven states have no income tax." },
+                { 
+                  label: "Gains stack on top", 
+                  desc: "Your ordinary income fills the brackets first. Capital gains are taxed starting from where your income leaves off — not from $0.",
+                  icon: <TrendingDown size={18} className="text-[var(--accent)]" />
+                },
+                { 
+                  label: "Short-term = income rate", 
+                  desc: "Assets held 1 year or less are taxed at your ordinary income rate (10%–37%). No preferential treatment applies here.",
+                  icon: <AlertTriangle size={18} className="text-[var(--accent)]" />
+                },
+                { 
+                  label: "NIIT: +3.8% Surcharge", 
+                  desc: "High earners (>$200k single / $250k joint) owe an extra 3.8% on investment income to fund Medicare programs.",
+                  icon: <Info size={18} className="text-[var(--accent)]" />
+                },
+                { 
+                  label: "State tax is separate", 
+                  desc: "Most states tax gains as ordinary income. California (13.3%) and New York (10.9%) are highest; others have none.",
+                  icon: <Receipt size={18} className="text-[var(--accent)]" />
+                },
               ].map((item) => (
-                <div key={item.label} className="flex items-start gap-[14px]">
-                  <span className="font-sans text-[12px] font-[600] text-[var(--accent)] shrink-0 pt-[1px]">→</span>
+                <div key={item.label} className="flex items-start gap-[16px] p-[4px]">
+                  <div className="w-[36px] h-[36px] rounded-[10px] bg-[var(--accent-bg)] border border-[var(--accent-border)] flex items-center justify-center shrink-0 mt-[2px]">
+                    {item.icon}
+                  </div>
                   <div>
-                    <span className="font-sans text-[13px] font-[600] text-[var(--text-primary)]">{item.label} </span>
-                    <span className="font-sans text-[13px] text-[var(--text-muted)] leading-[1.5]">{item.desc}</span>
+                    <h4 className="font-sans text-[14px] font-[600] text-[var(--text-primary)] m-[0_0_4px]">{item.label}</h4>
+                    <p className="font-sans text-[13px] text-[var(--text-muted)] leading-[1.6] m-0">{item.desc}</p>
                   </div>
                 </div>
               ))}
