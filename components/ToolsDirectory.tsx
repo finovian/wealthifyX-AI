@@ -62,7 +62,7 @@ const tools = [
     icon: Activity,
     href: "/tools/options-profit-calculator",
     category: "Investment",
-    live: false,
+    live: true,
   },
   {
     name: "Capital Gains Tax Calculator",

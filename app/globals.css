@@ -642,13 +642,23 @@ input[type="number"] {
 
 .calc-chart svg,
 .calc-chart .recharts-wrapper,
-.calc-chart .recharts-surface {
+.calc-chart .recharts-surface,
+.recharts-tooltip-wrapper {
   outline: none !important;
 }
 
+.recharts-zIndex-layer_-100,
+.recharts-tooltip-wrapper,
 .recharts-zIndex-layer_100,
 .recharts-layer,
 .recharts-curve,
 .recharts-area-area {
+  outline: none !important;
+}
+
+.recharts-wrapper,
+.recharts-surface,
+.recharts-wrapper *,
+.recharts-surface * {
   outline: none !important;
 }
