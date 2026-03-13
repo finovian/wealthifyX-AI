@@ -215,7 +215,7 @@ function ModeToggle({ mode, onChange }: { mode: Mode; onChange: (m: Mode) => voi
           className={`h-[34px] px-[14px] rounded-[8px] border-none font-sans text-[12px] font-[500] cursor-pointer transition-all duration-[0.15s] whitespace-nowrap ${
             mode === opt.value
               ? "bg-[var(--accent)] text-[white] shadow-[0_2px_4px_rgba(0,0,0,0.15)]"
-              : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card)]"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-transparent hover:bg-[var(--bg-card)]"
           }`}
         >
           {opt.label}

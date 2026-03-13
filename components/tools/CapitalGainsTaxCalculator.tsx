@@ -213,7 +213,7 @@ function HoldingToggle({ isLongTerm, onChange }: { isLongTerm: boolean; onChange
           className={`flex-1 h-[36px] px-[10px] border-none rounded-[8px] font-ubuntu text-[12px] font-[500] cursor-pointer transition-all duration-[0.15s] whitespace-nowrap ${
             isLongTerm === opt.value
               ? "bg-[var(--accent)] text-[white] shadow-[0_2px_4px_rgba(0,0,0,0.15)]"
-              : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card)]"
+              : "text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-transparent hover:bg-[var(--bg-card)]"
           }`}
         >{opt.label}</button>
       ))}
