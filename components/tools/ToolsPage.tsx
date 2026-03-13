@@ -12,6 +12,7 @@ import {
   DollarSign,
   Search,
   ArrowRight,
+  Activity,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -59,13 +60,13 @@ const tools = [
     live: false,
   },
   {
-    name: "APY Interest Calculator",
-    description: "Calculate annual percentage yield on any savings account.",
-    icon: Calculator,
-    href: "/tools/apy-interest-calculator",
-    category: "Savings",
-    live: false,
-  },
+  name: "Options Profit Calculator",
+  description: "Calculate profit, loss, and breakeven on any options trade.",
+  icon: Activity,
+  href: "/tools/options-profit-calculator",
+  category: "Investment",
+  live: false,
+},
   {
     name: "Capital Gains Tax Calculator",
     description: "Estimate federal capital gains tax on investment profits.",

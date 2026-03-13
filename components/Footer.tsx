@@ -1,14 +1,14 @@
 'use client';
 
 const calculatorLinks = [
-    { name: 'Compound Interest', href: '/tools/compound-interest-calculator' },
-    { name: 'Investment Calculator', href: '/tools/investment-calculator' },
-    { name: 'Roth IRA Calculator', href: '/tools/roth-ira-calculator' },
-    { name: '401k Calculator', href: '/tools/401k-calculator' },
-    { name: 'Savings Goal', href: '/tools/savings-goal-calculator' },
-    { name: 'APY Calculator', href: '/tools/apy-interest-calculator' },
-    { name: 'Capital Gains Tax', href: '/tools/capital-gains-calculator' },
-    { name: 'Dividend Calculator', href: '/tools/dividend-calculator' },
+  { name: 'Compound Interest', href: '/tools/compound-interest-calculator' },
+  { name: 'Investment Calculator', href: '/tools/investment-calculator' },
+  { name: 'Roth IRA Calculator', href: '/tools/roth-ira-calculator' },
+  { name: '401k Calculator', href: '/tools/401k-calculator' },
+  { name: 'Savings Goal', href: '/tools/savings-goal-calculator' },
+  { name: 'Options Profit Calculator', href: '/tools/options-profit-calculator' },
+  { name: 'Capital Gains Tax', href: '/tools/capital-gains-calculator' },
+  { name: 'Dividend Calculator', href: '/tools/dividend-calculator' },
 ];
 
 const companyLinks = [
