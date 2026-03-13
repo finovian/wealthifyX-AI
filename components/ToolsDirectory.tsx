@@ -78,7 +78,7 @@ const tools = [
     icon: DollarSign,
     href: "/tools/dividend-calculator",
     category: "Investment",
-    live: false,
+    live: true,
   },
 ];
 export default function ToolsDirectory() {

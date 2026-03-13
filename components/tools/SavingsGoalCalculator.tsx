@@ -471,7 +471,7 @@ export default function SavingsGoalCalculator() {
                     <label className="font-ubuntu text-[13px] font-[500] text-[var(--text-secondary)]">
                       Time to Reach Goal
                     </label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 max-md:grid-cols-1 gap-5">
                       <div className="flex flex-col gap-[4px]">
                         <span className="font-mono text-[10px] text-[var(--text-faint)] uppercase tracking-[0.8px]">Years</span>
                         <input
