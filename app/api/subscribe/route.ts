@@ -75,6 +75,18 @@ export async function POST(req: Request) {
 
   // TEMP DEBUG — remove after fix
   try {
+    if (!process.env.UPSTASH_REDIS_REST_URL) {
+      return Response.json(
+        { error: "UPSTASH_REDIS_REST_URL missing" },
+        { status: 500 },
+      );
+    }
+    if (!process.env.UPSTASH_REDIS_REST_TOKEN) {
+      return Response.json(
+        { error: "UPSTASH_REDIS_REST_TOKEN missing" },
+        { status: 500 },
+      );
+    }
     await redis.ping();
   } catch (err) {
     return Response.json(
