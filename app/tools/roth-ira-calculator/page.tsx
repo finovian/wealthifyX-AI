@@ -127,7 +127,9 @@ export default async function Page({ searchParams }: PageProps) {
           }),
         }}
       />
-      <RothIRACalculator initialValues={params} />
+      <div className="min-h-[600px]">
+        <RothIRACalculator initialValues={params} />
+      </div>
     </>
   );
 }
