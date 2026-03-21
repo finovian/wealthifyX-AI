@@ -412,6 +412,7 @@ Stats strip:    delay 0.6s
 
 ## Responsiveness Breakpoints
 
+
 ```
 Mobile:  < 768px    — single column, reduced padding, hidden nav links
 Tablet:  768-1024px — 2 col tools grid, adjusted font sizes
