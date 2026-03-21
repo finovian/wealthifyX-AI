@@ -45,17 +45,17 @@ export default function ShareButton({ params, disabled }: ShareButtonProps) {
     <button
       onClick={handleShare}
       disabled={disabled}
-      className="w-full flex items-center justify-center gap-[10px] p-[14px] bg-[var(--bg-card)] border-[1px] border-[var(--border-strong)] rounded-[14px] font-ubuntu text-[13px] font-[500] text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group shadow-sm hover:shadow-md"
+      className="w-full flex items-center justify-center gap-[10px] p-[16px] bg-[var(--accent-bg)] border-[1.5px] border-[var(--accent-border)] rounded-[16px] font-ubuntu text-[14px] font-[600] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[white] hover:border-[var(--accent)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group shadow-[0_2px_10px_-3px_rgba(22,163,74,0.15)] hover:shadow-[0_8px_25px_-5px_rgba(22,163,74,0.3)] active:scale-[0.98]"
     >
       {copied ? (
         <>
-          <Check size={16} className="text-[var(--positive)]" />
-          <span>Link copied to clipboard!</span>
+          <Check size={18} className="shrink-0 transition-colors" />
+          <span className="tracking-[0.2px]">Link copied to clipboard!</span>
         </>
       ) : (
         <>
-          <Share2 size={16} className="group-hover:scale-110 transition-transform" />
-          <span>Share Results</span>
+          <Share2 size={18} className="shrink-0 group-hover:rotate-[-12deg] transition-transform duration-300" />
+          <span className="tracking-[0.2px]">Share My Results</span>
         </>
       )}
     </button>
