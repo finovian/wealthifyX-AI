@@ -109,7 +109,7 @@ export default function RootLayout({
             `}
           </Script>
           <Suspense fallback={null}>
-            <AnalyticsProvider />\
+            <AnalyticsProvider />
             <Analytics />
           </Suspense>
           <Navbar />
