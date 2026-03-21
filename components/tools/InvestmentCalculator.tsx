@@ -14,6 +14,7 @@ import {
 import { BarChart3, ArrowRight } from "lucide-react";
 import { faqs, relatedTools } from "@/constants/investment-calculator";
 import FAQSection from "../FAQSection";
+import ShareButton from "@/components/ShareButton";
 import {
   trackCalculatorResult,
   trackFrequencyChange,
@@ -22,6 +23,19 @@ import {
 } from "@/lib/analytics";
 
 /* ─── Types ─────────────────────────────────────────── */
+interface InitialValues {
+  principal?: string;
+  rate?: string;
+  years?: string;
+  frequency?: string;
+  contribution?: string;
+  result?: string;
+}
+
+interface InvestmentCalculatorProps {
+  initialValues?: InitialValues;
+}
+
 interface CalcResult {
   finalAmount: number;
   totalGain: number;
@@ -149,12 +163,12 @@ function CurvedUnderline() {
 }
 
 /* ─── Main component ─────────────────────────────────── */
-export default function InvestmentCalculator() {
-  const [principal, setPrincipal] = useState("10000");
-  const [rate, setRate] = useState("10");
-  const [years, setYears] = useState("10");
-  const [frequency, setFrequency] = useState(1);
-  const [contribution, setContribution] = useState("");
+export default function InvestmentCalculator({ initialValues }: InvestmentCalculatorProps) {
+  const [principal, setPrincipal] = useState(initialValues?.principal || "10000");
+  const [rate, setRate] = useState(initialValues?.rate || "10");
+  const [years, setYears] = useState(initialValues?.years || "10");
+  const [frequency, setFrequency] = useState(initialValues?.frequency ? parseInt(initialValues.frequency) : 1);
+  const [contribution, setContribution] = useState(initialValues?.contribution || "");
 
   const debouncedTrackResult = useMemo(
     () =>
@@ -372,6 +386,21 @@ export default function InvestmentCalculator() {
                     </span>
                   </motion.div>
                 ))}
+              </div>
+
+              {/* Share Results Button */}
+              <div className="mb-[16px] relative z-10">
+                <ShareButton
+                  params={{
+                    principal: principal,
+                    rate: rate,
+                    years: years,
+                    frequency: frequency.toString(),
+                    contribution: contribution,
+                    result: result?.finalAmount.toString() || "",
+                  }}
+                  disabled={!result}
+                />
               </div>
 
               {/* Chart */}
