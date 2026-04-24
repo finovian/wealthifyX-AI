@@ -15,26 +15,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Session and User ID are required" }, { status: 400 });
     }
 
-    // Ensure DB is ready (in production you might do this elsewhere or assume it's done)
+
     await initDB();
 
-    // 1. Save user message to DB
+
     await saveMessage(userId, sessionId, "user", message);
 
-    // 2. Fetch last N messages for context (e.g., last 6 messages)
+
     const dbHistory = await getHistory(sessionId, 6);
     
-    // Convert DB history to format expected by runAgent
-    // Note: getHistory already returns {role, content}
+
     const historyForModel = dbHistory.map(m => ({
       role: m.role === "assistant" ? "assistant" : "user",
       content: m.content
-    })).filter(m => m.content !== message); // Avoid duplicating current message if it's already in history
+    })).filter(m => m.content !== message); 
 
-    // 3. Run agent
+
     const result = await runAgent(message, historyForModel as any);
 
-    // 4. Save assistant response to DB
+
     await saveMessage(userId, sessionId, "assistant", result.answer);
 
     return NextResponse.json(result);
@@ -47,7 +46,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Add a GET method to fetch history if needed
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const sessionId = searchParams.get("sessionId");
