@@ -1,18 +1,24 @@
 "use client";
 
 import { useState, useRef, FormEvent, KeyboardEvent } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Square } from "lucide-react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
+  onAbort: () => void;
+  isLoading: boolean;
   disabled: boolean;
 }
 
-export default function ChatInput({ onSend, disabled }: ChatInputProps) {
+export default function ChatInput({ onSend, onAbort, isLoading, disabled }: ChatInputProps) {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
+    if (isLoading) {
+      onAbort();
+      return;
+    }
     const trimmed = value.trim();
     if (!trimmed || disabled) return;
     onSend(trimmed);
@@ -34,8 +40,8 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    // Cap at ~4 lines (approx 96px)
-    el.style.height = `${Math.min(el.scrollHeight, 96)}px`;
+    // Cap at ~8 lines (approx 200px)
+    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
   };
 
   return (
@@ -44,7 +50,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
         <div className="relative flex items-end bg-[var(--bg-card)] border-[1px] border-[var(--border)] rounded-[20px] p-[4px] sm:p-[6px] shadow-sm focus-within:border-[var(--accent)] focus-within:shadow-[0_0_0_3px_var(--accent-bg)] transition-all duration-[0.2s]">
           <textarea
             ref={textareaRef}
-            className="flex-1 bg-transparent border-none outline-none p-[10px_12px] sm:p-[12px_16px] text-[15px] text-[var(--text-primary)] placeholder:text-[var(--text-faint)] font-sans resize-none leading-[1.6] min-h-[44px] max-h-[120px]"
+            className="flex-1 bg-transparent border-none outline-none p-[10px_12px] sm:p-[12px_16px] text-[15px] text-[var(--text-primary)] placeholder:text-[var(--text-faint)] font-sans resize-y leading-[1.6] min-h-[44px] max-h-[300px] overflow-y-auto no-scrollbar"
             placeholder="Ask a financial question..."
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -57,11 +63,15 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
           />
           <button
             onClick={handleSubmit}
-            disabled={disabled || !value.trim()}
-            aria-label="Send message"
+            disabled={(!isLoading && (disabled || !value.trim())) || (isLoading && disabled)}
+            aria-label={isLoading ? "Stop generating" : "Send message"}
             className="w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] rounded-[12px] sm:rounded-[14px] bg-[var(--accent)] text-white flex items-center justify-center disabled:opacity-[0.25] transition-all duration-[0.2s] hover:bg-[var(--accent-hover)] active:scale-[0.92] cursor-pointer shrink-0 m-[2px] shadow-sm hover:shadow-md border-none focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2 disabled:cursor-not-allowed disabled:hover:bg-[var(--accent)] disabled:focus:ring-[var(--accent)] disabled:focus:ring-offset-0"
           >
-            <ArrowUp size={18} strokeWidth={2.5} />
+            {isLoading ? (
+              <Square size={16} fill="currentColor" strokeWidth={0} />
+            ) : (
+              <ArrowUp size={18} strokeWidth={2.5} />
+            )}
           </button>
         </div>
 
