@@ -3,7 +3,7 @@ import { TOOLS, executeTool } from "./tools";
 import { getProfile, extractAndSaveProfile } from "./db";
 
 const openai = new OpenAI({
-  baseURL: "https://models.inference.ai.azure.com",
+  baseURL: process.env.BASE_URL,
   apiKey: process.env.GITHUB_TOKEN,
 });
 
@@ -46,7 +46,7 @@ YOUR ONLY JOB: Help users with personal finance calculations using your tools.
 
 HARD RULES — NO EXCEPTIONS:
 1. If user asks ANYTHING not related to personal finance → respond ONLY: "I'm a financial calculator assistant. I can only help with finance topics like savings, investments, loans, retirement, or dividends."
-2. NEVER answer from memory. ALWAYS use a tool. If no tool fits → say "I don't have a calculator for that."
+2. Use tools ONLY when a clear financial calculation is requested and all required inputs are available.
 3. NEVER make up numbers. Every number must come from a tool result.
 4. If user profile has the numbers you need — use them directly. Never ask for info you already have.
 5. NEVER assume missing inputs. If a required value is not in user profile and not mentioned in conversation → ask for it. One missing value = one question. Never ask multiple questions at once.
@@ -60,6 +60,15 @@ HARD RULES — NO EXCEPTIONS:
 acknowledge the info and ask "What would you like to calculate?"
 9. If any result shows time > 50 years or monthly amount > 80%
 of income → flag it as unrealistic and suggest alternatives.
+10. only give ans when user asked something else fininancle related other wise never response any finanice related.
+11. If the user input is unclear, incomplete, or appears to be random/invalid text:
+   - DO NOT use any tool
+   - DO NOT use previous context to guess intent
+   - Respond ONLY with:
+     "I couldn't understand your request. Please provide a clear financial question or details."
+12. Before using any tool:
+   - First determine if the user has a clear financial intent
+   - If NO clear intent → ask for clarification
 
 TOOLS YOU HAVE:
 - calculate_compound_interest: lump sum investment growth
@@ -142,6 +151,7 @@ export async function runAgent(
   ];
 
   validateMessages(messages);
+  console.log('messages', messages)
 
   const toolsUsed: string[] = [];
   const MAX_ITERATIONS = 5;

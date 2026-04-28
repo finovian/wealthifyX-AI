@@ -211,6 +211,13 @@ export default function ChatClient() {
     }
   }, []);
 
+  const handleAbort = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setIsLoading(false);
+    }
+  }, []);
+
   const handleSessionSelect = useCallback((sid: string) => {
     if (sid === sessionId) return;
     sessionStorage.setItem("wx_session_id", sid);
@@ -279,8 +286,10 @@ export default function ChatClient() {
 
       <ChatInput 
         key={sessionId}
-        onSend={sendMessage} 
-        disabled={isLoading || isHistoryLoading} 
+        onSend={sendMessage}
+        onAbort={handleAbort}
+        isLoading={isLoading}
+        disabled={isHistoryLoading} 
       />
     </div>
   );
