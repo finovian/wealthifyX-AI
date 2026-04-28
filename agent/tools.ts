@@ -507,23 +507,34 @@ export function executeTool(name: string, input: any): string {
   try {
     switch (name) {
       case "calculate_compound_interest":
+        if (input.principal <= 0) throw new Error("Principal must be greater than 0");
+        if (input.annual_rate < 0) throw new Error("Annual rate cannot be negative");
+        if (input.years <= 0) throw new Error("Years must be greater than 0");
         return JSON.stringify(calculateCompoundInterest(
           input.principal, input.annual_rate, input.years,
           input.frequency ?? 12, input.monthly_contribution ?? 0
         ));
 
       case "calculate_sip":
+        if (input.monthly_amount <= 0) throw new Error("Monthly amount must be greater than 0");
+        if (input.annual_rate < 0) throw new Error("Annual rate cannot be negative");
+        if (input.years <= 0) throw new Error("Years must be greater than 0");
         return JSON.stringify(calculateSIP(
           input.monthly_amount, input.annual_rate, input.years
         ));
 
       case "calculate_retirement":
+        if (input.monthly_expenses <= 0) throw new Error("Monthly expenses must be greater than 0");
+        if (input.years_to_retire < 0) throw new Error("Years to retire cannot be negative");
         return JSON.stringify(calculateRetirementCorpus(
           input.monthly_expenses, input.years_to_retire,
           input.inflation_rate ?? 6
         ));
 
       case "calculate_roth_ira":
+        if (input.current_age < 0) throw new Error("Current age cannot be negative");
+        if (input.retirement_age <= input.current_age) throw new Error("Retirement age must be greater than current age");
+        if (input.annual_contribution <= 0) throw new Error("Annual contribution must be greater than 0");
         return JSON.stringify(calculateRothIRA(
           input.current_age, input.retirement_age,
           input.annual_contribution, input.existing_balance ?? 0,
@@ -531,6 +542,12 @@ export function executeTool(name: string, input: any): string {
         ));
 
       case "calculate_401k":
+        if (input.salary <= 0) throw new Error("Salary must be greater than 0");
+        if (input.emp_contrib_pct < 0 || input.emp_contrib_pct > 100) throw new Error("Employee contribution percentage must be between 0 and 100");
+        if (input.match_pct < 0 || input.match_pct > 100) throw new Error("Match percentage must be between 0 and 100");
+        if (input.match_up_to_pct < 0 || input.match_up_to_pct > 100) throw new Error("Match up to percentage must be between 0 and 100");
+        if (input.current_age < 0) throw new Error("Current age cannot be negative");
+        if (input.retirement_age <= input.current_age) throw new Error("Retirement age must be greater than current age");
         return JSON.stringify(calculate401k(
           input.salary, input.emp_contrib_pct, input.match_pct,
           input.match_up_to_pct, input.existing_balance ?? 0,
@@ -539,12 +556,22 @@ export function executeTool(name: string, input: any): string {
         ));
 
       case "calculate_savings_goal":
+        if (input.goal <= 0) throw new Error("Goal must be greater than 0");
+        if (input.monthly_contrib < 0) throw new Error("Monthly contribution cannot be negative");
+        if (input.annual_rate < 0) throw new Error("Annual rate cannot be negative");
         return JSON.stringify(calculateSavingsGoal(
           input.goal, input.current_savings ?? 0,
           input.monthly_contrib, input.annual_rate ?? 0
         ));
 
       case "calculate_options_profit":
+        if (!["long_call", "long_put", "short_call", "short_put"].includes(input.position_type)) {
+          throw new Error("Invalid position type");
+        }
+        if (input.strike_price <= 0) throw new Error("Strike price must be greater than 0");
+        if (input.premium_per_share < 0) throw new Error("Premium per share cannot be negative");
+        if (input.contracts <= 0) throw new Error("Contracts must be greater than 0");
+        if (input.target_price <= 0) throw new Error("Target price must be greater than 0");
         return JSON.stringify(calculateOptionsProfit(
           input.position_type, input.strike_price,
           input.premium_per_share, input.contracts ?? 1,
@@ -552,6 +579,10 @@ export function executeTool(name: string, input: any): string {
         ));
 
       case "calculate_capital_gains_tax":
+        if (input.buy_price <= 0) throw new Error("Buy price must be greater than 0");
+        if (input.sell_price <= 0) throw new Error("Sell price must be greater than 0");
+        if (input.shares <= 0) throw new Error("Shares must be greater than 0");
+        if (input.annual_income < 0) throw new Error("Annual income cannot be negative");
         return JSON.stringify(calculateCapitalGainsTax(
           input.buy_price, input.sell_price, input.shares,
           input.is_long_term, input.annual_income,
@@ -559,6 +590,10 @@ export function executeTool(name: string, input: any): string {
         ));
 
       case "calculate_dividend":
+        if (input.share_price <= 0) throw new Error("Share price must be greater than 0");
+        if (input.shares <= 0) throw new Error("Shares must be greater than 0");
+        if (input.dividend_per_share < 0) throw new Error("Dividend per share cannot be negative");
+        if (input.years <= 0) throw new Error("Years must be greater than 0");
         return JSON.stringify(calculateDividend(
           input.share_price, input.shares, input.dividend_per_share,
           input.stock_growth_rate ?? 7, input.div_growth_rate ?? 5,

@@ -166,19 +166,40 @@ export async function extractAndSaveProfile(
     apiKey: process.env.GITHUB_TOKEN,
   });
 
+
+
+  const profile = await getProfile(sessionId);
+  console.log('profile', profile)
+
   const response = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {
         role: "system",
-        content: `Extract financial facts from this conversation. 
-Return ONLY a JSON object with the facts you find.
-Only include facts explicitly mentioned — never guess or assume.
-Use these keys when relevant:
-age, monthly_income, annual_income, monthly_expenses, 
+        content: `
+Extract ONLY clearly stated financial facts.
+
+Rules:
+- Do NOT guess or assume
+- Only include explicit values
+- Ignore unclear or partial data
+- Do NOT overwrite existing values unless clearly updated
+- Return ONLY JSON
+
+Allowed keys:
+age, monthly_income, annual_income, monthly_expenses,
 current_savings, retirement_age, existing_investments,
-risk_appetite, financial_goals, debt, dependents.
-If no financial facts found, return empty object {}.`,
+risk_appetite, financial_goals, debt, dependents
+
+Existing profile:
+${JSON.stringify(profile)}
+
+Conversation:
+${userMessage}
+${assistantResponse}
+
+Return only fields to update or {}.
+`
       },
       {
         role: "user",
@@ -189,10 +210,12 @@ If no financial facts found, return empty object {}.`,
   });
 
   const raw = response.choices[0].message.content ?? "{}";
+  console.log('raw', raw)
 
   try {
     const facts = JSON.parse(raw);
     if (Object.keys(facts).length > 0) {
+      console.log('facts', facts)
       await updateProfile(sessionId, facts);
     }
   } catch {
