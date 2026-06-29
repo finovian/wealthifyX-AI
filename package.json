@@ -17,14 +17,14 @@
     "dotenv": "^17.4.2",
     "framer-motion": "^12.40.0",
     "lucide-react": "^0.577.0",
-    "next": "16.2.6",
+    "next": "16.2.9",
     "openai": "^6.39.0",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "react-markdown": "^10.1.0",
     "recharts": "^3.8.1",
     "remark-gfm": "^4.0.1",
-    "uuid": "^14.0.0",
+    "uuid": "^14.0.1",
     "ws": "^8.21.0"
   },
   "devDependencies": {
@@ -34,9 +34,9 @@
     "@types/react-dom": "^19",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
-    "tsx": "^4.22.3",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }
