@@ -35,10 +35,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(result);
   } catch (err: unknown) {
-    console.error("[Agent API Error]", err);
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    const errorStatus = (err as { status?: number }).status;
+    console.error("[Agent API Error]", errorMessage, errorStatus, err);
 
     return NextResponse.json(
-      { error: "Our AI assistant is currently unavailable. Please try again later." },
+      { error: `AI assistant error: ${errorMessage}` },
       { status: 500 }
     );
   }

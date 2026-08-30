@@ -178,19 +178,18 @@ export async function extractAndSaveProfile(
   userMessage: string,
   assistantResponse: string
 ) {
-  const OpenAI = (await import("openai")).default;
-  const openai = new OpenAI({
-    baseURL: "https://models.inference.ai.azure.com",
-    apiKey: process.env.GITHUB_TOKEN,
-  });
+const OpenAI = (await import("openai")).default;
 
-
+const groq = new OpenAI({
+  baseURL: "https://api.groq.com/openai/v1",
+  apiKey: process.env.GROQ_API_KEY,
+});
 
   const profile = await getProfile(sessionId);
   console.log('profile', profile)
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+  const response = await groq.chat.completions.create({
+    model: "openai/gpt-oss-120b",
     messages: [
       {
         role: "system",
