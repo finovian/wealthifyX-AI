@@ -4,8 +4,8 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 const openai = new OpenAI({
-    baseURL: process.env.BASE_URL,
-    apiKey: process.env.GITHUB_TOKEN,
+    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+    apiKey: process.env.GEMINI_API_KEY,
 });
 
 const documents = [
@@ -37,8 +37,9 @@ const documents = [
 
 async function getEmbedding(text: string): Promise<number[]> {
     const response = await openai.embeddings.create({
-        model: "text-embedding-3-small",
+        model: "gemini-embedding-001",
         input: text,
+        dimensions: 1536,
     });
 
     return response.data[0].embedding;
@@ -61,8 +62,9 @@ async function indexDocuments() {
 
 async function testSearch() {
     const embeddingResponse = await openai.embeddings.create({
-        model: "text-embedding-3-small",
+        model: "gemini-embedding-001",
         input: "Who is Jay Rajshakha?",
+        dimensions: 1536,
     });
 
     const embedding = embeddingResponse.data[0].embedding;

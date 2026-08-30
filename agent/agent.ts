@@ -2,9 +2,16 @@ import OpenAI from "openai";
 import { TOOLS, executeTool } from "./tools";
 import { getProfile, extractAndSaveProfile, searchDocuments } from "./db";
 
-const openai = new OpenAI({
-  baseURL: process.env.BASE_URL,
-  apiKey: process.env.GITHUB_TOKEN,
+// Groq for chat completions (fast, better free-tier rate limits)
+const groq = new OpenAI({
+  baseURL: "https://api.groq.com/openai/v1",
+  apiKey: process.env.GROQ_API_KEY,
+});
+
+// Gemini for embeddings only (Groq doesn't offer embeddings)
+const gemini = new OpenAI({
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 type Role = "user" | "assistant" | "system" | "tool";
@@ -136,16 +143,50 @@ function safeParseJSON(input: string) {
   }
 }
 
+async function callWithRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err: unknown) {
+      const status = (err as { status?: number }).status;
+      const isRetryable = status === 429 || status === 500 || status === 503;
+
+      if (!isRetryable || attempt === maxRetries - 1) {
+        throw err;
+      }
+
+      const delay = status === 429
+        ? (attempt + 1) * 10000
+        : Math.pow(2, attempt) * 1000;
+      console.warn(`[Retry] Attempt ${attempt + 1} failed (status ${status}), retrying in ${delay}ms...`);
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+  throw new Error("Retry exhausted");
+}
+
 async function getRelevantContext(question: string): Promise<string> {
 
-  const embeddingResponse = await openai.embeddings.create({
-    model: "text-embedding-3-small",
+if (!question?.trim()) {
+  throw new Error("Question cannot be empty");
+}
+
+const embeddingResponse = await callWithRetry(() =>
+  gemini.embeddings.create({
+    model: "gemini-embedding-001",
     input: question,
-  });
+    dimensions: 1536,
+  })
+);
+
+const embedding = embeddingResponse.data?.[0]?.embedding;
+
+if (!embedding) {
+  throw new Error("No embedding returned from the API");
+}
 
   console.log('embeddingResponse.data[0].embedding', embeddingResponse.data[0].embedding)
 
-  const embedding = embeddingResponse.data[0].embedding;
   const docs = await searchDocuments(embedding, 3);
   console.log('docs', docs)
   if (docs.length === 0) return "";
@@ -181,12 +222,14 @@ export async function runAgent(
   while (iteration < MAX_ITERATIONS) {
     iteration++;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: messages as unknown as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
-      tools: toOpenAITools(),
-      tool_choice: toolsUsed.length === 0 ? "required" : "auto",
-    });
+    const response = await callWithRetry(() =>
+      groq.chat.completions.create({
+        model: "openai/gpt-oss-120b",
+        messages: messages as unknown as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+        tools: toOpenAITools(),
+        tool_choice: "auto",
+      })
+    );
 
     const choice = response.choices[0];
     const assistantMessage = choice.message;
